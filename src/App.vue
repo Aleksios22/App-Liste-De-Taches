@@ -1,42 +1,64 @@
 <template>
   <div class="container">
-    <Header title="Task Tracker" />
+    <Header title="Tâches" />
+    <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" v-bind:tasks="tasks" />
   </div>
 </template>
 
 <script>
 import Header from "./components/Header";
+import Tasks from "./components/Tasks";
 
 export default {
   name: "App",
   components: {
     Header,
+    Tasks,
   },
   data() {
-    // tasks: [];
+    return {
+      tasks: [],
+    };
   },
+
+  methods: {
+    deleteTask(id) {
+      if(confirm('Are you sure?')) {
+              this.tasks = this.tasks.filter((task) => task.id !==
+      id)
+      }
+
+    },
+    toggleReminder(id) {
+      this.tasks = this.tasks.map((task) => task.id === id
+      ? {...task, reminder: !task.reminder} : task
+      )
+    },
+  },
+
   created() {
     this.tasks = [
       {
         id: 1,
-        text: "fesuyifhbeufbeufbef",
-        day: "fjsrenfuesfbng",
+        text: "faire le lit",
+        day: "20 mars",
         reminder: true,
       },
       {
         id: 2,
-        text: "iki i8k88kuku",
-        day: "eef feeee fegr",
+        text: "récurer la trappe",
+        day: "11 mars",
         reminder: false,
       },
       {
         id: 3,
-        text: "rgregregwerg",
-        day: "fjsrenfuegwe gf ewsfbng",
+        text: "Casser une porte",
+        day: "12 février",
         reminder: true,
       },
     ];
-  },
+  }
+  
 };
 </script>
 
